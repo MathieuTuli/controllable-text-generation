@@ -18,6 +18,6 @@ def config_file_parser(args: Namespace) -> Namespace:
     return args
 
 
-def create_dir(dname: Path) -> None:
-    dname.mkdir(exist_ok=True, parents=True)
+def create_dir(dname: str) -> None:
+    Path(dname).mkdir(exist_ok=True, parents=True)
     return dname

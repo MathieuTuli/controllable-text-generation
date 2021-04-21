@@ -12,7 +12,7 @@ from transformers import EncoderDecoderModel
 import torch
 import tqdm
 
-from ..data.utils import load_data, extend_vocabulary
+from ..data.utils import extend_vocabulary
 from ..models import get_model, get_tokenizer
 from ..utils.io import create_dir
 

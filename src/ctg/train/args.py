@@ -22,7 +22,9 @@ def train_args(sub_parser: ArgumentParser) -> None:
     train_group.add_argument("--optimizer", type=str, choices=OPTIMIZERS)
     train_group.add_argument("--scheduler", type=str, choices=SCHEDULERS)
     train_group.add_argument("--batch-size", type=int)
-    train_group.add_argument("--max-length", type=int)
+    train_group.add_argument("--val-batch-size", type=int, default=None)
+    train_group.add_argument("--max-src-length", type=int)
+    train_group.add_argument("--max-tgt-length", type=int)
     train_group.add_argument("--max-epochs", type=int)
     train_group.add_argument("--num-trials", type=int, default=3)
     train_group.add_argument("--loss", type=str)
@@ -30,6 +32,8 @@ def train_args(sub_parser: ArgumentParser) -> None:
     train_group.add_argument("--clip-grad", default=1.0, type=float)
     train_group.add_argument("--optimizer-kwargs")
     train_group.add_argument("--scheduler-kwargs")
+    train_group.add_argument("--ignore-pad-for-loss",
+                             action='store_true', default=True)
 
     data_group = sub_parser.add_argument_group('data')
     data_group.add_argument("--name", type=str, choices=DATASETS)
@@ -43,6 +47,8 @@ def train_args(sub_parser: ArgumentParser) -> None:
     data_group.add_argument("--max-val-samples", type=int, default=-1)
     data_group.add_argument("--prefix", type=str, default='')
     data_group.add_argument("--tokenizer-files", default=None, nargs="+")
+    data_group.add_argument("--pad-to-max_length",
+                            action='store_true', default=False)
 
     io_group = sub_parser.add_argument_group('io')
     io_group.add_argument("--output", type=str)

@@ -12,8 +12,7 @@ import time
 from transformers.tokenization_utils_base import PreTrainedTokenizerBase
 from transformers import (
     GPT2Config, GPT2LMHeadModel,
-    AutoTokenizer, AutoModelForSeq2SeqLM,
-    T5ForConditionalGeneration, T5Config,
+    AutoTokenizer, AutoModelForSeq2SeqLM, AutoConfig,
     EncoderDecoderModel, EncoderDecoderConfig,
     BertConfig, BertModel, BertForMaskedLM, BertLMHeadModel,
     PreTrainedTokenizerFast
@@ -30,6 +29,27 @@ from .configs import CONFIG_DICTS
 TOKENIZERS = set(['bert-base-uncased', 'openai-gpt',
                   'gpt2', 'bert-base-uncased', 't5-small', 'BPE'])
 MODELS = set(['gpt2', 'distilgpt2', 'bert-base-uncased', 't5-small'])
+
+
+def get_tokenizer_model(
+        tokenizer_name: str,
+        model_name: str,
+        cache_dir: str,
+        config_name: str = None,
+        use_fast_tokenizer: bool = True
+):
+    config = AutoConfig.from_pretrained(
+        config_name if config_name is not None else model_name,
+        cache_dir=cache_dir)
+    tokenizer = AutoTokenizer.from_pretrained(
+        tokenizer_name,
+        cache_dir=cache_dir,
+        use_fast=use_fast_tokenizer)
+    model = AutoModelForSeq2SeqLM.from_pretrained(
+        model_name,
+        config=config,
+        cache_dir=cache_dir)
+    return tokenizer, model
 
 
 def get_tokenizer(tokenizer_name: str,

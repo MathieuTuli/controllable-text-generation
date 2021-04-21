@@ -1,20 +1,25 @@
 # Train parameters
-model: t5-small
-tokenizer: BPE
+model: facebook/wmt19-en-ru
+tokenizer: facebook/wmt19-en-ru
 model-pretrained: False
 tokenizer-pretrained: False
 optimizer: AdamW
 scheduler: LinearLambdaLR
 batch-size: 4
-max-length: 512
+max-src-length: 512
+max-tgt-length: 512
+ignore-pad-for-loss: True
+pad-to-max-length: True
 max-epochs: 100
 num-trials: 1
 loss: cross_entropy
 clip-grad: 1.0
 optimizer-kwargs:
-  lr: 0.0005
+  learning_rate: 0.0005
+  weight_decay: 0.0
 scheduler-kwargs:
-  num_warmup_steps: 1500
+  warmup_ratio: 0.
+  warmup_steps: 1500
 mask: False
 
 # Data Parameters
